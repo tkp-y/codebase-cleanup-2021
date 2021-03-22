@@ -2,6 +2,17 @@ import os
 from datetime import datetime
 from pandas import read_csv
 
+def format_usd(my_price):
+    """
+    Formats a number as USD with dollar sign and two decimals (and also thousands separator)
+
+    Params my_price is a number (int or float) that we want to format
+
+    Examples: format_usd(10)
+
+    """
+    return f"${my_price:,.2f}"
+
 # READ INVENTORY OF PRODUCTS
 
 products_filepath = os.path.join(os.path.dirname(__file__), "..", "data", "products.csv")
@@ -32,12 +43,12 @@ print("---------")
 print("CHECKOUT AT: " + str(checkout_at.strftime("%Y-%M-%d %H:%m:%S")))
 print("---------")
 for p in selected_products:
-    print("SELECTED PRODUCT: " + p["name"] + "   " + '${:.2f}'.format(p["price"]))
+    print("SELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 
 print("---------")
-print(f"SUBTOTAL: {subtotal:,.2f}")
-print(f"TAX: {(subtotal * 0.0875):.2f}")
-print(f"TOTAL: {((subtotal * 0.0875) + subtotal):.2f}")
+print(f"SUBTOTAL: {format_usd(subtotal)}")
+print(f"TAX: {format_usd(subtotal * 0.0875)}")
+print(f"TOTAL: {format_usd((subtotal * 0.0875) + subtotal)}")
 print("---------")
 print("THANK YOU! PLEASE COME AGAIN SOON!")
 print("---------")
@@ -50,12 +61,12 @@ receipt_filepath = os.path.join(os.path.dirname(__file__), "..", "receipts", f"{
 with open(receipt_filepath, "w") as receipt_file:
     receipt_file.write("------------------------------------------")
     for p in selected_products:
-        receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + '${:.0f}'.format(p["price"]))
+        receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 
     receipt_file.write("\n---------")
-    receipt_file.write(f"\nSUBTOTAL: {subtotal}")
-    receipt_file.write(f"\nTAX: {subtotal * 0.875}")
-    receipt_file.write(f"\nTOTAL: {((subtotal * 0.875) + subtotal)}")
+    receipt_file.write(f"\nSUBTOTAL: {format_usd(subtotal)}")
+    receipt_file.write(f"\nTAX: {format_usd(subtotal * 0.875)}")
+    receipt_file.write(f"\nTOTAL: {format_usd((subtotal * 0.875) + subtotal)}")
     receipt_file.write("\n---------")
     receipt_file.write("\nTHANK YOU! PLEASE COME AGAIN SOON!")
     receipt_file.write("\n---------")
