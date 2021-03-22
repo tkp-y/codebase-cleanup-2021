@@ -3,6 +3,14 @@ from datetime import datetime
 from pandas import read_csv
 
 def format_usd(my_price):
+    """
+    Formats a number as USD with dollar sign and two decimals (and also thousands separator)
+
+    Params my_price is a number (int or float) that we want to format
+
+    Examples: format_usd(10)
+
+    """
     return f"${my_price:,.2f}"
 
 # READ INVENTORY OF PRODUCTS
@@ -53,7 +61,7 @@ receipt_filepath = os.path.join(os.path.dirname(__file__), "..", "receipts", f"{
 with open(receipt_filepath, "w") as receipt_file:
     receipt_file.write("------------------------------------------")
     for p in selected_products:
-        receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + '${:.0f}'.format(p["price"]))
+        receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 
     receipt_file.write("\n---------")
     receipt_file.write(f"\nSUBTOTAL: {format_usd(subtotal)}")
