@@ -46,6 +46,7 @@ if __name__ == "__main__":
     print("---------")
     print("CHECKOUT AT: " + str(checkout_at.strftime("%Y-%M-%d %H:%m:%S")))
     print("---------")
+
     for p in selected_products:
         print("SELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 
@@ -69,8 +70,8 @@ if __name__ == "__main__":
 
         receipt_file.write("\n---------")
         receipt_file.write(f"\nSUBTOTAL: {format_usd(subtotal)}")
-        receipt_file.write(f"\nTAX: {format_usd(subtotal * 0.875)}")
-        receipt_file.write(f"\nTOTAL: {format_usd((subtotal * 0.875) + subtotal)}")
+        receipt_file.write(f"\nTAX: {format_usd(sales_tax)}")
+        receipt_file.write(f"\nTOTAL: {format_usd((sales_tax) + subtotal)}")
         receipt_file.write("\n---------")
         receipt_file.write("\nTHANK YOU! PLEASE COME AGAIN SOON!")
         receipt_file.write("\n---------")
