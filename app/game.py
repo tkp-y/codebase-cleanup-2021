@@ -5,7 +5,7 @@ from random import choice
 
 valid_options = ["rock", "paper", "scissors"]
 
-def my_func(choice1, choice2):
+def determine_winner(choice1, choice2):
     """
     Params:
         choice1 and choice 2 are both strings (either 'rock', 'paper' or 'scissors')
@@ -14,19 +14,22 @@ def my_func(choice1, choice2):
         "rock": {
             "rock": None,
             "paper" : "paper",
-            "scissors" : "scissors",
+            "scissors" : "rock",
         },
         "paper" : {
             "rock" : "paper",
             "paper" : None,
             "scissors" : "scissors",
-        }
+        },
         "scissors" : {
-            "rock":
-            "paper":
-            "scissors"
+            "rock": "rock",
+            "paper": "scissors",
+            "scissors": None,
         }
+        
     }
+    winning_choice = winners[choice1][choice2]
+    return winning_choice
 
 
 if __name__ == '__main__':
@@ -52,7 +55,7 @@ if __name__ == '__main__':
     # DETERMINATION OF WINNER
     #
 
-    winner = determine_winner()
+    winner = determine_winner(u,c)
 
     if winner == u:
         print("YOU WON!")
@@ -61,22 +64,7 @@ if __name__ == '__main__':
     elif winner == None:
         print("TIE")
 
-    #if u == "rock":
-    #    if c == "rock":
-    #        print("It's a tie!")
-    #    elif c == "paper":
-    #        print("The computer wins")
-    #    elif c == "scissors":
-    #        print("The user wins")
-    #elif u == "paper":
-    #    if c == "rock":
-            
-
-    #elif u == "scissors":
-
-
-    #use a single dictionary
-
+  
 
 
 
