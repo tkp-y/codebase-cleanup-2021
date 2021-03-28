@@ -13,6 +13,19 @@ def format_usd(my_price):
     """
     return f"${my_price:,.2f}"
 
+def find_product(product_id, all_products):
+    """
+    Params :
+        product_id (str) like "8"
+        all_products (list of dict) each dict should have "id", "name", "department", "aisle", and "price" attributes
+    """
+    matching_products = [p for p in all_products if str(p["id"]) == str(product_id)]
+    if any(matching_products):
+        return matching_products[0]
+    else:
+        return None
+
+
 if __name__ == "__main__":
 
     # READ INVENTORY OF PRODUCTS
@@ -29,9 +42,9 @@ if __name__ == "__main__":
         if selected_id.upper() == "DONE":
             break
         else:
-            matching_products = [p for p in products if str(p["id"]) == str(selected_id)]
-            if any(matching_products):
-                selected_products.append(matching_products[0])
+            matching_product = find_product(selected_id, products)
+            if matching_product:
+                selected_products.append(matching_product)
             else:
                 print("OOPS, Couldn't find that product. Please try again.")
 
@@ -46,6 +59,7 @@ if __name__ == "__main__":
     print("---------")
     print("CHECKOUT AT: " + str(checkout_at.strftime("%Y-%M-%d %H:%m:%S")))
     print("---------")
+
     for p in selected_products:
         print("SELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 
@@ -69,8 +83,8 @@ if __name__ == "__main__":
 
         receipt_file.write("\n---------")
         receipt_file.write(f"\nSUBTOTAL: {format_usd(subtotal)}")
-        receipt_file.write(f"\nTAX: {format_usd(subtotal * 0.875)}")
-        receipt_file.write(f"\nTOTAL: {format_usd((subtotal * 0.875) + subtotal)}")
+        receipt_file.write(f"\nTAX: {format_usd(sales_tax)}")
+        receipt_file.write(f"\nTOTAL: {format_usd((sales_tax) + subtotal)}")
         receipt_file.write("\n---------")
         receipt_file.write("\nTHANK YOU! PLEASE COME AGAIN SOON!")
         receipt_file.write("\n---------")
