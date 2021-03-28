@@ -15,6 +15,8 @@ def format_usd(my_price):
 
 def find_product(product_id, all_products):
     """
+    Returns the product information in a dictionary of the selected product
+
     Params :
         product_id (str) like "8"
         all_products (list of dict) each dict should have "id", "name", "department", "aisle", and "price" attributes

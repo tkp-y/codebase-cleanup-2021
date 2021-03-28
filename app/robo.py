@@ -6,46 +6,54 @@ import requests
 from pandas import DataFrame
 import plotly.express as px
 
-load_dotenv()
 
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="abc123")
+def request_data(symbol_input, key):
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol_input}&apikey={key}"
+    response = requests.get(request_url)
+    parsed_response = json.loads(response.text)
+    return parsed_response
 
-# FETCH DATA
 
-symbol = input("Please input a stock symbol (e.g. 'MSFT'): ")
-request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
-response = requests.get(request_url)
-parsed_response = json.loads(response.text)
+if __name__ == '__main__':
 
-# PROCESS DATA
+    load_dotenv()
 
-records = []
-for date, daily_data in parsed_response["Time Series (Daily)"].items():
-    record = {
-        "date": date,
-        "open": float(daily_data["1. open"]),
-        "high": float(daily_data["2. high"]),
-        "low": float(daily_data["3. low"]),
-        "close": float(daily_data["4. close"]),
-        "volume": int(daily_data["5. volume"]),
-    }
-    records.append(record)
+    API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="abc123")
 
-df = DataFrame(records)
+    # FETCH DATA
 
-# DISPLAY RESULTS
+    symbol = input("Please input a stock symbol (e.g. 'MSFT'): ")
+    new_parsed_response = request_data(symbol, API_KEY)
 
-print("LATEST CLOSING PRICE: ", records[0]["close"])
-print("LATEST CLOSING PRICE: ", df.iloc[0]["close"])
-print("RECENT HIGH: ", df["high"].max())
-print("RECENT LOW: ", df["low"].min())
+    # PROCESS DATA
 
-# EXPORT PRICES TO CSV
+    records = []
+    for date, daily_data in new_parsed_response["Time Series (Daily)"].items():
+        record = {
+            "date": date,
+            "open": float(daily_data["1. open"]),
+            "high": float(daily_data["2. high"]),
+            "low": float(daily_data["3. low"]),
+            "close": float(daily_data["4. close"]),
+            "volume": int(daily_data["5. volume"]),
+        }
+        records.append(record)
 
-csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", f"{symbol.lower()}_prices.csv")
-df.to_csv(csv_filepath)
+    df = DataFrame(records)
 
-# CHART PRICES OVER TIME
+    # DISPLAY RESULTS
 
-fig = px.line(df, y="close", title=f"Closing Prices for {symbol.upper()}") # see: https://plotly.com/python-api-reference/generated/plotly.express.line
-fig.show()
+    print("LATEST CLOSING PRICE: ", records[0]["close"])
+    print("LATEST CLOSING PRICE: ", df.iloc[0]["close"])
+    print("RECENT HIGH: ", df["high"].max())
+    print("RECENT LOW: ", df["low"].min())
+
+    # EXPORT PRICES TO CSV
+
+    csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", f"{symbol.lower()}_prices.csv")
+    df.to_csv(csv_filepath)
+
+    # CHART PRICES OVER TIME
+
+    fig = px.line(df, y="close", title=f"Closing Prices for {symbol.upper()}") # see: https://plotly.com/python-api-reference/generated/plotly.express.line
+    fig.show()
