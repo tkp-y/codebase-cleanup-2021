@@ -6,6 +6,8 @@ import requests
 from pandas import DataFrame
 import plotly.express as px
 
+from app.number_decorators import format_usd
+
 
 def request_data(symbol_input, key):
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol_input}&apikey={key}"
@@ -43,10 +45,10 @@ if __name__ == '__main__':
 
     # DISPLAY RESULTS
 
-    print("LATEST CLOSING PRICE: ", records[0]["close"])
-    print("LATEST CLOSING PRICE: ", df.iloc[0]["close"])
-    print("RECENT HIGH: ", df["high"].max())
-    print("RECENT LOW: ", df["low"].min())
+    print("LATEST CLOSING PRICE: ", format_usd(records[0]["close"]))
+   # print("LATEST CLOSING PRICE: ", format_usd(df.iloc[0]["close"]))
+    print("RECENT HIGH: ", format_usd(df["high"].max()))
+    print("RECENT LOW: ", format_usd(df["low"].min()))
 
     # EXPORT PRICES TO CSV
 
