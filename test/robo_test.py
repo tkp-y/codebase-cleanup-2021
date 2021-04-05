@@ -20,7 +20,9 @@ def test_request_data():
     assert list(valid_data.keys())[1] == "Time Series (Daily)"
     assert valid_data["Meta Data"]["2. Symbol"] == "AAPL"
 
-
+#@pytest.fixture(scope="module")
+#def mock_robo_data():
+#    data = open('test/mock_data/mock_robo_data.txt', 'r')
 
 
 
