@@ -2,8 +2,7 @@
 from dotenv import load_dotenv
 import os
 import pytest
-from pandas import DataFrame
-import pandas as pd
+
 
 from app.robo import request_data
 
