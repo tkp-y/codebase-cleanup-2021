@@ -2,19 +2,12 @@ import os
 from datetime import datetime
 from pandas import read_csv
 
-def format_usd(my_price):
-    """
-    Formats a number as USD with dollar sign and two decimals (and also thousands separator)
-
-    Params my_price is a number (int or float) that we want to format
-
-    Examples: format_usd(10)
-
-    """
-    return f"${my_price:,.2f}"
+from app.number_decorators import format_usd
 
 def find_product(product_id, all_products):
     """
+    Returns the product information in a dictionary of the selected product
+
     Params :
         product_id (str) like "8"
         all_products (list of dict) each dict should have "id", "name", "department", "aisle", and "price" attributes
@@ -49,6 +42,7 @@ if __name__ == "__main__":
                 print("OOPS, Couldn't find that product. Please try again.")
 
     checkout_at = datetime.now()
+    receipt_id = checkout_at.strftime("%Y-%m-%d %H:%M:%S")
 
     subtotal = sum([float(p["price"]) for p in selected_products])
 
@@ -57,7 +51,7 @@ if __name__ == "__main__":
     # PRINT RECEIPT
 
     print("---------")
-    print("CHECKOUT AT: " + str(checkout_at.strftime("%Y-%M-%d %H:%m:%S")))
+    print("CHECKOUT AT: " + str(receipt_id))
     print("---------")
 
     for p in selected_products:
@@ -73,11 +67,13 @@ if __name__ == "__main__":
 
     # WRITE RECEIPT TO FILE
 
-    receipt_id = checkout_at.strftime('%Y-%M-%d-%H-%m-%S')
     receipt_filepath = os.path.join(os.path.dirname(__file__), "..", "receipts", f"{receipt_id}.txt")
 
     with open(receipt_filepath, "w") as receipt_file:
-        receipt_file.write("------------------------------------------")
+        receipt_file.write("\n------------------------------------------")
+        receipt_file.write("\nCHECKOUT AT: " + str(receipt_id))
+
+        receipt_file.write("\n------------------------------------------")
         for p in selected_products:
             receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 
