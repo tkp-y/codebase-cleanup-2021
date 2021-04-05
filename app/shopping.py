@@ -42,6 +42,7 @@ if __name__ == "__main__":
                 print("OOPS, Couldn't find that product. Please try again.")
 
     checkout_at = datetime.now()
+    receipt_id = checkout_at.strftime("%Y-%m-%d %H:%M:%S")
 
     subtotal = sum([float(p["price"]) for p in selected_products])
 
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     # PRINT RECEIPT
 
     print("---------")
-    print("CHECKOUT AT: " + str(checkout_at.strftime("%Y-%M-%d %H:%m:%S")))
+    print("CHECKOUT AT: " + str(receipt_id))
     print("---------")
 
     for p in selected_products:
@@ -66,11 +67,13 @@ if __name__ == "__main__":
 
     # WRITE RECEIPT TO FILE
 
-    receipt_id = checkout_at.strftime('%Y-%M-%d-%H-%m-%S')
     receipt_filepath = os.path.join(os.path.dirname(__file__), "..", "receipts", f"{receipt_id}.txt")
 
     with open(receipt_filepath, "w") as receipt_file:
-        receipt_file.write("------------------------------------------")
+        receipt_file.write("\n------------------------------------------")
+        receipt_file.write("\nCHECKOUT AT: " + str(receipt_id))
+
+        receipt_file.write("\n------------------------------------------")
         for p in selected_products:
             receipt_file.write("\nSELECTED PRODUCT: " + p["name"] + "   " + format_usd(p["price"]))
 

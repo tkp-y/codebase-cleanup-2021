@@ -10,7 +10,7 @@ from app.number_decorators import format_usd
 
 def convert_data(final_parsed_response):
     records = []
-    for date, daily_data in final_parsed_response["Time Series (Daily)"].items():
+    for date, daily_data in reversed(final_parsed_response["Time Series (Daily)"].items()):
         record = {
             "date": date,
             "open": float(daily_data["1. open"]),
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     
   #  records = []
     new_df = convert_data(new_parsed_response)
-    print(new_df)
+
 
     # DISPLAY RESULTS
 
