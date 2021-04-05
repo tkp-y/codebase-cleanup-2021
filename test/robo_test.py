@@ -24,31 +24,6 @@ def test_request_data():
 def mock_robo_data():
     data = open('test/mock_data/mock_robo_data.txt', 'r')
 
-def test_convert_data(mock_robo_data):
-    test_parsed_response = mock_robo_data
-    expected_data = [
-
-        [
-            "2021-03-29",
-            "121.6500",
-            "122.5800",
-            "120.7300",
-            "121.3900",
-            "80543668"
-        ],
-        [
-            "2021-03-26",
-            "120.3500",
-            "121.4800",
-            "118.9200",
-            "121.2100",
-             "94071234"
-        ]
-    ]
-    expected_response =  pd.DataFrame(expected_data, index = ["date", "open", "high", "low", "close", "volume"])
-
-    result_df = convert_data(test_parsed_response)
-    assert expected_response == result_df
 
 
 
