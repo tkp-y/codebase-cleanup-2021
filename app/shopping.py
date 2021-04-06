@@ -47,6 +47,7 @@ if __name__ == "__main__":
     subtotal = sum([float(p["price"]) for p in selected_products])
 
     sales_tax = subtotal * .0875
+    total = sales_tax + subtotal
 
     # PRINT RECEIPT
 
@@ -60,7 +61,7 @@ if __name__ == "__main__":
     print("---------")
     print(f"SUBTOTAL: {format_usd(subtotal)}")
     print(f"TAX: {format_usd(sales_tax)}")
-    print(f"TOTAL: {format_usd((sales_tax) + subtotal)}")
+    print(f"TOTAL: {format_usd(total)}")
     print("---------")
     print("THANK YOU! PLEASE COME AGAIN SOON!")
     print("---------")
@@ -80,7 +81,7 @@ if __name__ == "__main__":
         receipt_file.write("\n---------")
         receipt_file.write(f"\nSUBTOTAL: {format_usd(subtotal)}")
         receipt_file.write(f"\nTAX: {format_usd(sales_tax)}")
-        receipt_file.write(f"\nTOTAL: {format_usd((sales_tax) + subtotal)}")
+        receipt_file.write(f"\nTOTAL: {format_usd(total)}")
         receipt_file.write("\n---------")
         receipt_file.write("\nTHANK YOU! PLEASE COME AGAIN SOON!")
         receipt_file.write("\n---------")

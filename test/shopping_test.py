@@ -4,19 +4,21 @@ import os
 import pytest
 from pandas import read_csv
 
-from app.shopping import format_usd, find_product
+from app.shopping import find_product
+from app.number_decorators import format_usd
 
+#to test price formatting logic
 def test_format_usd():
     assert format_usd(9.5) == "$9.50"
 
-
+#import mock data
 @pytest.fixture(scope="module")
 def mock_products():
     mock_products_filepath = os.path.join(os.path.dirname(__file__), "mock_data", "mock_products.csv")
     mock_products_df = read_csv(mock_products_filepath)
     return mock_products_df.to_dict("records")
 
-
+#to test ability to look up matching products
 def test_find_product(mock_products):
     # with valid product id, returns the product info:
     valid_result = find_product("8", mock_products)
