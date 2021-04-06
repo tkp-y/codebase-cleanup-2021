@@ -1,6 +1,6 @@
 
 
-
+#to format prices
 def format_usd(my_price):
     """
     Formats a number as USD with dollar sign and two decimals (and also thousands separator)

@@ -5,6 +5,7 @@ from random import choice
 
 valid_options = ["rock", "paper", "scissors"]
 
+#function to determine the winner
 def determine_winner(choice1, choice2):
     """
     Params:
@@ -62,7 +63,7 @@ if __name__ == '__main__':
     elif winner == c:
         print("COMPUTER WON!")
     elif winner == None:
-        print("TIE")
+        print("IT'S A TIE.")
 
   
 

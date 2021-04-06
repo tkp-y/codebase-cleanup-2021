@@ -2,6 +2,7 @@
 
 from app.game import determine_winner
 
+#to test winner determination logic
 def test_determination_of_the_winnter():
     assert determine_winner("rock", "rock") == None
     assert determine_winner("rock", "paper") == "paper"

@@ -29,8 +29,6 @@ if __name__ == '__main__':
     new_parsed_response = request_data(symbol, API_KEY)
 
     # PROCESS DATA
-    
-  #  records = []
 
     records = []
     for date, daily_data in new_parsed_response["Time Series (Daily)"].items():
@@ -47,7 +45,6 @@ if __name__ == '__main__':
     df = DataFrame(records)
 
 
-
     # DISPLAY RESULTS
 
     print("LATEST CLOSING PRICE: ", format_usd(df.iloc[0]["close"]))
@@ -57,7 +54,7 @@ if __name__ == '__main__':
     # EXPORT PRICES TO CSV
 
     csv_filepath = os.path.join(os.path.dirname(__file__), "..", "data", f"{symbol.lower()}_prices.csv")
-    new_df.to_csv(csv_filepath)
+    df.to_csv(csv_filepath)
 
     # CHART PRICES OVER TIME
 
